@@ -34,7 +34,13 @@ jobs:
     - name: Build the Docker image
       run: |
         ls -la
-        docker build . -f docker-compose -t grupo2sd2024/project-sd-2024-2025:${{ env.IMAGE_VERSION }} .
+        docker build . -f ./src/order-service/Dockerfile -t grupo2sd2024/order-service:${{ env.IMAGE_VERSION }} .
+        docker build . -f ./src/makeline-service/Dockerfile -t grupo2sd2024/makeline-service:${{ env.IMAGE_VERSION }} .
+        docker build . -f ./src/product-service/Dockerfile -t grupo2sd2024/product-service:${{ env.IMAGE_VERSION }} .
+        docker build . -f ./src/store-front/Dockerfile -t grupo2sd2024/store-front:${{ env.IMAGE_VERSION }} .
+        docker build . -f ./src/store-admin/Dockerfile -t grupo2sd2024/store-admin:${{ env.IMAGE_VERSION }} .
+        docker build . -f ./src/virtual-customer/Dockerfile -t grupo2sd2024/virtual-customer:${{ env.IMAGE_VERSION }} .
+        docker build . -f ./src/virtual-worker/Dockerfile -t grupo2sd2024/virtual-worker:${{ env.IMAGE_VERSION }} .
 
     # Passo 6: Push da imagem Docker para o Docker Hub
     - name: Push the Docker image
@@ -44,7 +50,7 @@ jobs:
     # Passo 7: Atualizar arquivos YAML com a nova versão da imagem
     - name: Update Docker image version in YAMLs
       run: |
-        find . -name "*.yaml" -exec sed -i "s|image: .*/project-sd-2024-2025:.*|image: grupo2sd2024/project-sd-2024-2025:${{ env.IMAGE_VERSION }}|g" {} \;
+        find . -name "*.yaml" -exec sed -i "s|image: ghcr.io/azure-samples/aks-store-demo/order-service:latest|image: grupo2sd2024/order-service:${{ env.IMAGE_VERSION }}|g" {} \;
 
     # Passo 8: Comitar as mudanças nos arquivos YAML de volta ao repositório
     - name: Commit updated YAMLs
