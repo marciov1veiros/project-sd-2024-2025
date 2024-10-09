@@ -10,9 +10,6 @@ ARG APP_VERSION=0.1.0
 # Copy the current directory contents into the container at /app
 COPY . /app
 
-# Copy go.mod and go.sum first to leverage Docker caching
-COPY go.mod go.sum .app/
-
 # Build the Go app
 RUN go build -ldflags "-X main.version=$APP_VERSION" -o main .
 
