@@ -21,9 +21,9 @@ jobs:
     # Passo 3: Login no Docker Hub
     - name: Login to Docker Hub
       uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}  # Defina seu nome de usuário no Docker Hub nas Secrets
-        password: ${{ secrets.DOCKER_PASSWORD }}  # Defina sua senha ou token de acesso nas Secrets
+      env:
+        username: ${{secrets.DOCKER_USERNAME}}  # Defina seu nome de usuário no Docker Hub nas Secrets
+        password: ${{secrets.DOCKER_PASSWORD}}  # Defina sua senha ou token de acesso nas Secrets
 
     # Passo 4: Gerar a versão da imagem usando o número do build
     - name: Define image version
