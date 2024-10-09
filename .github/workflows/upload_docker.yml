@@ -57,6 +57,12 @@ jobs:
     - name: Update Docker image version in YAMLs
       run: |
         find . -name "*.yaml" -exec sed -i "s|image: ghcr.io/azure-samples/aks-store-demo/order-service:latest|image: grupo2sd2024/order-service:${{ env.IMAGE_VERSION }}|g" {} \;
+        find . -name "*.yaml" -exec sed -i "s|image: ghcr.io/azure-samples/aks-store-demo/makeline-service:latest|image: grupo2sd2024/makeline-service:${{ env.IMAGE_VERSION }}|g" {} \;
+        find . -name "*.yaml" -exec sed -i "s|image: ghcr.io/azure-samples/aks-store-demo/virtual-worker:latest|image: grupo2sd2024/virtual-worker:${{ env.IMAGE_VERSION }}|g" {} \;
+        find . -name "*.yaml" -exec sed -i "s|image: ghcr.io/azure-samples/aks-store-demo/product-service:latest|image: grupo2sd2024/product-service:${{ env.IMAGE_VERSION }}|g" {} \;
+        find . -name "*.yaml" -exec sed -i "s|image: ghcr.io/azure-samples/aks-store-demo/store-front:latest|image: grupo2sd2024/store-front:${{ env.IMAGE_VERSION }}|g" {} \;
+        find . -name "*.yaml" -exec sed -i "s|image: ghcr.io/azure-samples/aks-store-demo/store-admin:latest: grupo2sd2024/store-admin:${{ env.IMAGE_VERSION }}|g" {} \;
+        find . -name "*.yaml" -exec sed -i "s|image: ghcr.io/azure-samples/aks-store-demo/virtual-customer:latest|image: grupo2sd2024/virtual-customer:${{ env.IMAGE_VERSION }}|g" {} \;
 
     # Passo 8: Comitar as mudanças nos arquivos YAML de volta ao repositório
     - name: Commit updated YAMLs
