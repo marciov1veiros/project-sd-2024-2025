@@ -30,6 +30,12 @@ jobs:
       id: version
       run: echo "IMAGE_VERSION=${{ github.run_number }}" >> $GITHUB_ENV
 
+
+    # Step 4: Install dependencies
+    - name: Install dependencies
+      run: |
+        go mod download
+
     # Passo 5: Build e tag da imagem Docker
     - name: Build the Docker image
       run: |
