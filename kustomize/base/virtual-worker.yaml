@@ -16,7 +16,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
       - name: virtual-worker
-        image: grupo2sd2024/virtual-worker:21
+        image: grupo2sd2024/virtual-worker:22
         env:
         - name: MAKELINE_SERVICE_URL
           value: http://makeline-service:3001
