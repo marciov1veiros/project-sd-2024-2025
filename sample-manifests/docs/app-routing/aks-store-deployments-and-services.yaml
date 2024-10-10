@@ -74,7 +74,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
       - name: order-service
-        image: grupo2sd2024/order-service:18
+        image: grupo2sd2024/order-service:19
         ports:
         - containerPort: 3000
         env:
@@ -127,7 +127,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
       - name: product-service
-        image: grupo2sd2024/product-service:18
+        image: grupo2sd2024/product-service:19
         ports:
         - containerPort: 3002
         resources:
@@ -156,7 +156,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
       - name: store-front
-        image: grupo2sd2024/store-front:18
+        image: grupo2sd2024/store-front:19
         ports:
         - containerPort: 8080
           name: store-front
