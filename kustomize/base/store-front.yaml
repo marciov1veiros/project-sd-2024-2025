@@ -16,7 +16,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
       - name: store-front
-        image: grupo2sd2024/store-front:21
+        image: grupo2sd2024/store-front:22
         ports:
         - containerPort: 8080
           name: store-front
