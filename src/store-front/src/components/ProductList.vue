@@ -25,6 +25,9 @@
           quantity: quantity
         })
       }
+    },
+    mounted() {
+      console.log(this.products)
     }
   }
 </script>
