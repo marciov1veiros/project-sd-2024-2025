@@ -36,3 +36,8 @@ jobs:
     - name: Build the Docker image
       run: |
         docker build -f ./src/store-front/Dockerfile -t grupo2sd2024/store-front:${{ env.IMAGE_VERSION }} ./src/store-front
+
+    # Passo 6: Push da imagem Docker para o Docker Hub
+    - name: Push the Docker image
+      run: |
+        docker push grupo2sd2024/store-front:${{ env.IMAGE_VERSION }}

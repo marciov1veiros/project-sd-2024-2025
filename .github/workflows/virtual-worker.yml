@@ -36,3 +36,8 @@ jobs:
     - name: Build the Docker image
       run: |
         docker build -f ./src/virtual-worker/Dockerfile -t grupo2sd2024/virtual-worker:${{ env.IMAGE_VERSION }} ./src/virtual-worker
+    
+    # Passo 6: Push da imagem Docker para o Docker Hub
+    - name: Push the Docker image
+      run: |
+        docker push grupo2sd2024/virtual-worker:${{ env.IMAGE_VERSION }}

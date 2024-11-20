@@ -36,3 +36,8 @@ jobs:
     - name: Build the Docker image
       run: |
         docker build -f ./src/store-admin/Dockerfile -t grupo2sd2024/store-admin:${{ env.IMAGE_VERSION }} ./src/store-admin
+    
+    # Passo 6: Push da imagem Docker para o Docker Hub
+    - name: Push the Docker image
+      run: |
+        docker push grupo2sd2024/store-admin:${{ env.IMAGE_VERSION }}
