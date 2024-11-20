@@ -35,11 +35,11 @@ export default {
   },
   methods: {
     getProducts() {
-      fetch('/get-products')
+      fetch('/products')
         .then(response => response.json())
         .then(products => {
           console.log('success getting proxy products')
-          this.products = products.products
+          this.products = products
         })
         .catch(error => {
           console.log(error)
