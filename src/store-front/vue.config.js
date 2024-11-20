@@ -2,7 +2,7 @@ const { defineConfig } = require('@vue/cli-service')
 const fetch = require("node-fetch")
 const bodyParser = require('body-parser')
 
-const PRODUCT_SERVICE_URL = ("http://localhost:8000") //Mudar para ENV
+const PRODUCT_SERVICE_URL = (process.env.VUE_APP_PRODUCT_SERVICE_URL || "http://172.19.0.2:3002/")
 const ORDER_SERVICE_URL = (process.env.VUE_APP_ORDER_SERVICE_URL || "http://172.19.0.5:3000/")
 
 module.exports = defineConfig({
@@ -27,8 +27,8 @@ module.exports = defineConfig({
         res.send({ status: 'ok', version: version})
       })
       
-      devServer.app.get('/get-products', (_, res) => {
-        fetch(`${PRODUCT_SERVICE_URL}/get-products`)
+      devServer.app.get('/products', (_, res) => {
+        fetch(`${PRODUCT_SERVICE_URL}`)
           .then(response => response.json())
           .then(products => {
             res.send(products)
