@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - dev-2  # Branch que será monitorada
-    #paths:
-    #  - 'src/order-service/**'
+    paths:
+      - 'src/order-service/**'
 
 jobs:
   build:
