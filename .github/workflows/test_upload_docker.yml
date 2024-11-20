@@ -1,4 +1,4 @@
-name: Build, Push Docker and Update YAMLs
+name: Testing_Upload_Docker
 
 on:
   push:
