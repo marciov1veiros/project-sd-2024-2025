@@ -35,9 +35,9 @@ jobs:
     # Passo 5: Build e tag da imagem Docker
     - name: Build the Docker image
       run: |
-        docker build -f ./src/virtual-customer/Dockerfile -t grupo2sd2024/virtual-customer:${{ env.IMAGE_VERSION }} ./src/virtual-customer
+        docker build -f ./src/virtual-customer/Dockerfile -t grupo2sd2024/virtual-customer:latest ./src/virtual-customer
     
     # Passo 6: Push da imagem Docker para o Docker Hub
     - name: Push the Docker image
       run: |
-        docker push grupo2sd2024/virtual-customer:${{ env.IMAGE_VERSION }}
+        docker push grupo2sd2024/virtual-customer:latest

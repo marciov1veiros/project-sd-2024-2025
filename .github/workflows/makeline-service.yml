@@ -35,9 +35,9 @@ jobs:
     # Passo 5: Build e tag da imagem Docker
     - name: Build the Docker image
       run: |
-        docker build -f ./src/makeline-service/Dockerfile -t grupo2sd2024/makeline-service:${{ env.IMAGE_VERSION }} ./src/makeline-service
+        docker build -f ./src/makeline-service/Dockerfile -t grupo2sd2024/makeline-service:latest ./src/makeline-service
     
     # Passo 6: Push da imagem Docker para o Docker Hub
     - name: Push the Docker image
       run: |
-        docker push grupo2sd2024/makeline-service:${{ env.IMAGE_VERSION }}
+        docker push grupo2sd2024/makeline-service:latest

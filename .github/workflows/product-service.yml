@@ -35,9 +35,9 @@ jobs:
     # Passo 5: Build e tag da imagem Docker
     - name: Build the Docker image
       run: |
-        docker build -f ./src/product-service/Dockerfile -t grupo2sd2024/product-service:${{ env.IMAGE_VERSION }} ./src/product-service
+        docker build -f ./src/product-service/Dockerfile -t grupo2sd2024/product-service:latest ./src/product-service
     
     # Passo 6: Push da imagem Docker para o Docker Hub
     - name: Push the Docker image
       run: |
-        docker push grupo2sd2024/product-service:${{ env.IMAGE_VERSION }}
+        docker push grupo2sd2024/product-service:latest
