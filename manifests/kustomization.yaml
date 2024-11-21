@@ -6,6 +6,5 @@ metadata:
 resources:
   - deployment.yaml  
 
-namePrefix: store-
-nameSuffix: -v1
+
 namespace: storeapptest
