@@ -1,7 +1,7 @@
 kustomize:
   images:
   - docker.io/grupo2sd2024/product-service:latest
-  - docker.io/grupo2sd2024/store-front:3915d4ebc1c7bb15a274a0fc698b56ce0ca96964
+  - docker.io/grupo2sd2024/store-front:ab0b75290066734c4da1a90bd70310e3311966f3
   - docker.io/grupo2sd2024/order-service:latest
   - docker.io/grupo2sd2024/makeline-service:latest
   - docker.io/grupo2sd2024/store-admin:latest
