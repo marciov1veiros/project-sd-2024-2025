@@ -3,7 +3,7 @@ name: Store-Front-Upload
 on:
   push:
     branches:
-      - dev-2  # Branch que será monitorada
+      - dev  # Branch que será monitorada
     paths:
       - 'src/store-front/**'
 
