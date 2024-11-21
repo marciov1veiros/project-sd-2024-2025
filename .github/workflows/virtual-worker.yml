@@ -3,7 +3,7 @@ name: Virtual-Worker-Upload
 on:
   push:
     branches:
-      - dev-2  # Branch que será monitorada
+      - dev  # Branch que será monitorada
     paths:
       - 'src/virtual-worker/**'
 

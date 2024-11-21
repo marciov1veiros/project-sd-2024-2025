@@ -3,7 +3,7 @@ name: Product-Service-Upload
 on:
   push:
     branches:
-      - dev-2  # Branch que será monitorada
+      - dev  # Branch que será monitorada
     paths:
       - 'src/product-service/**'
 
