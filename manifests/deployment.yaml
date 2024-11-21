@@ -139,7 +139,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
       - name: order-service
-        image: grupo2sd2024/order-service:25
+        image: docker.io/grupo2sd2024/order-service:latest
         ports:
         - containerPort: 3000
         env:
@@ -226,7 +226,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
       - name: makeline-service
-        image: grupo2sd2024/makeline-service:25
+        image: docker.io/grupo2sd2024/makeline-service:latest
         ports:
         - containerPort: 3001
         env:
@@ -303,7 +303,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
       - name: product-service
-        image: grupo2sd2024/product-service:25
+        image: docker.io/grupo2sd2024/product-service:latest
         ports:
         - containerPort: 3002
         env: 
@@ -362,7 +362,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
       - name: store-front
-        image: grupo2sd2024/store-front:25
+        image: docker.io/grupo2sd2024/store-front:latest
         ports:
         - containerPort: 8080
           name: store-front
@@ -430,7 +430,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
       - name: store-admin
-        image: grupo2sd2024/store-admin:25
+        image: docker.io/grupo2sd2024/store-admin:latest
         ports:
         - containerPort: 8081
           name: store-admin
@@ -498,7 +498,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
       - name: virtual-customer
-        image: grupo2sd2024/virtual-customer:25
+        image: docker.io/grupo2sd2024/virtual-customer:latest
         env:
         - name: ORDER_SERVICE_URL
           value: http://order-service:3000/
@@ -530,7 +530,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
       - name: virtual-worker
-        image: grupo2sd2024/virtual-worker:25
+        image: docker.io/grupo2sd2024/virtual-worker:latest
         env:
         - name: MAKELINE_SERVICE_URL
           value: http://makeline-service:3001

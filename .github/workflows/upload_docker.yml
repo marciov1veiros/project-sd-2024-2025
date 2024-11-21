@@ -3,7 +3,7 @@ name: Build, Push Docker and Update YAMLs
 on:
   push:
     branches:
-      - dev  # Mude para o branch que você preferir
+      - main  # Mude para o branch que você preferir
 
 jobs:
   build:
