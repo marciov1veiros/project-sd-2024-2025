@@ -506,7 +506,6 @@ spec:
     targetPort: 8080
   selector:
     app: store-front
-  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -574,7 +573,6 @@ spec:
     targetPort: 8080
   selector:
     app: store-grpc
-  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment

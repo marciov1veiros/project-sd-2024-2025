@@ -2,26 +2,24 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: store-ingress
-  namespace: storeapptest
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /                    # Define o destino da reescrita de URL
-    nginx.ingress.kubernetes.io/weighted-services: '{"store-front": 80, "store-grpc": 20}'  # Balanceamento de carga 80/20
+    nginx.ingress.kubernetes.io/canary: "true"
+    nginx.ingress.kubernetes.io/canary-weight: "20"
 spec:
   rules:
-  - host: www.storefrontsdproject.com                                      # Domínio que será acessado
-    http:
+  - http:
       paths:
-      - path: /                                                          # Caminho raiz
+      - path: /
         pathType: Prefix
         backend:
           service:
-            name: store-front                                            # Serviço que recebe 80% do tráfego
+            name: store-front
             port:
-              number: 80                                                 # Porta do serviço front-end
-      - path: /                                                          # Caminho raiz também
+              number: 80
+      - path: /
         pathType: Prefix
         backend:
           service:
-            name: store-grpc                                            # Serviço que recebe 20% do tráfego
+            name: store-grpc
             port:
-              number: 80                                                 # Porta do serviço gRPC
+              number: 80
