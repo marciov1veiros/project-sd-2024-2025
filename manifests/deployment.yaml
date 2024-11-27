@@ -347,6 +347,65 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: product-grpc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-grpc
+  template:
+    metadata:
+      labels:
+        app: product-grpc
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+      - name: product-grpc
+        image: docker.io/sdgrupo01/product-service-grpc:latest
+        ports:
+        - containerPort: 8080
+        env: 
+        - name: AI_SERVICE_URL
+          value: "http://ai-service:5001/"
+        resources:
+          requests:
+            cpu: 500m
+            memory: 128Mi
+          limits:
+            cpu: 1000m
+            memory: 256Mi
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          failureThreshold: 3
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          failureThreshold: 5
+          initialDelaySeconds: 3
+          periodSeconds: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-grpc
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: product-grpc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   name: fastapi-app
   labels:
     run: fastapi-app
@@ -371,7 +430,7 @@ spec:
             - name: GRPC_SERVER1_HOST
               value: "grpc-server1-service" #MUDAR
             - name: GRPC_SERVER2_HOST
-              value: "grpc-server2-service" #MUDAR este especialmente
+              value: "product-grpc"
         ports:
         - containerPort: 8000
         resources:

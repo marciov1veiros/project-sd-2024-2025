@@ -22,6 +22,10 @@ app = FastAPI()
 REQUEST_COUNT = Counter('http_request_total', 'Total HTTP Requests', ['method', 'status', 'path'])
 REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'HTTP Request Duration', ['method', 'status', 'path'])
 REQUEST_IN_PROGRESS = Gauge('http_requests_in_progress', 'HTTP Requests in progress', ['method', 'path'])
+GRPC_REQUEST_COUNT = Counter('grpc_request_total', 'Total gRPC Requests', ['method', 'status'])
+GRPC_REQUEST_LATENCY = Histogram('grpc_request_duration_seconds', 'gRPC Request Duration', ['method', 'status'])
+ITEMS_SOLD = Counter('items_sold_total', 'Total Items Sold')
+GRPC_CONNECTIONS = Gauge('grpc_connections', 'Number of active gRPC connections', ['server'])
 
 # System metrics
 CPU_USAGE = Gauge('process_cpu_usage', 'Current CPU usage in percent')
@@ -42,8 +46,8 @@ class OrderRequest(BaseModel):
 
 @app.post("/order-products")
 async def order_products(order: OrderRequest):
-    #f"{os.getenv('GRPC_SERVER1_HOST', 'localhost')}:50051"
-    #"grpc-server1:50051"
+    #grpc.insecure_channel("grpc-server1:50051")
+    #grpc.insecure_channel(f"{os.getenv('GRPC_SERVER1_HOST', 'localhost')}:50051")
     with grpc.insecure_channel(f"{os.getenv('GRPC_SERVER1_HOST', 'localhost')}:50051") as channel:
         stub = order_pb2_grpc.OrderServiceStub(channel)
 
@@ -65,29 +69,48 @@ async def order_products(order: OrderRequest):
 
 @app.get("/get-products")
 async def get_products():
-    #f"{os.getenv('GRPC_SERVER2_HOST', 'localhost')}:50052"
-    #"grpc-server2:8088"
-    with grpc.insecure_channel(f"{os.getenv('GRPC_SERVER2_HOST', 'localhost')}:50052") as channel:
-        stub = order_pb2_grpc.ProductServiceStub(channel)
+    grpc_server = f"{os.getenv('GRPC_SERVER2_HOST', 'localhost')}:8080"
+    GRPC_CONNECTIONS.labels(server=grpc_server).inc()  # Increment active connections
+    start_time = time.time()
 
-        # Create a request (order)
-        request = order_pb2.Empty()
+    #grpc.insecure_channel("grpc-server2:8080")
+    #grpc.insecure_channel(f"{os.getenv('GRPC_SERVER2_HOST', 'localhost')}:8080")
+    try:
+        with grpc.insecure_channel(grpc_server) as channel:
+            stub = order_pb2_grpc.ProductServiceStub(channel)
+            grpc_method = "GetProducts"
 
-        # Call the method to Submit order
-        response = stub.GetProducts(request)
+            # Create a request (order)
+            request = order_pb2.Empty()
 
-        # Serialize the response
-        products = [
-            {
-                "id": product.id,
-                "name": product.name,
-                "price": product.price,
-                "description": product.description,
-                "image": product.image
-            } for product in response.products
-        ]
+            # Call the method to Submit order
+            response = stub.GetProducts(request)
 
-        return {"products": products}
+            # Update gRPC metrics
+            duration = time.time() - start_time
+            GRPC_REQUEST_COUNT.labels(method=grpc_method, status="success").inc()
+            GRPC_REQUEST_LATENCY.labels(method=grpc_method, status="success").observe(duration)
+
+            # Serialize the response
+            products = [
+                {
+                    "id": product.id,
+                    "name": product.name,
+                    "price": product.price,
+                    "description": product.description,
+                    "image": product.image
+                } for product in response.products
+            ]
+
+            return {"products": products}
+    except grpc.RpcError as e:
+        # Update metrics for gRPC failure
+        duration = time.time() - start_time
+        GRPC_REQUEST_COUNT.labels(method=grpc_method, status="failure").inc()
+        GRPC_REQUEST_LATENCY.labels(method=grpc_method, status="failure").observe(duration)
+        raise HTTPException(status_code=500, detail="Failed to fetch products")
+    finally:
+        GRPC_CONNECTIONS.labels(server=grpc_server).dec()  # Decrement active connections
     
 @app.middleware("http")
 async def monitor_requests(request: Request, call_next):
