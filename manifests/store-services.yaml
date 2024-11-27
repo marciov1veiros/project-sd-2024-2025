@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: store-ingress
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/load-balance: "ewma" # Balanceamento de carga
+    nginx.ingress.kubernetes.io/service-upstream: "true"
+    nginx.ingress.kubernetes.io/upstreams: |
+      {
+        "store-front": {
+          "weight": 80
+        },
+        "store-grpc": {
+          "weight": 20
+        }
+      }
+spec:
+  rules:
+  - host: store-front-sd-project.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: store-front
+            port:
+              number: 80
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: store-grpc
+            port:
+              number: 80
