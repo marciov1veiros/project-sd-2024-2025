@@ -4,33 +4,24 @@ metadata:
   name: store-ingress
   namespace: storeapptest
   annotations:
-    kubernetes.io/ingress.class: "nginx"  # Especifica que o Nginx deve ser usado como controlador de ingress
-    nginx.ingress.kubernetes.io/load-balance: "ewma"  # Estratégia de balanceamento de carga: "ewma" (Exponential Weighted Moving Average)
-    nginx.ingress.kubernetes.io/upstreams: |
-      {
-        "store-front": {
-          "weight": 80
-        },
-        "store-grpc": {
-          "weight": 20
-        }
-      }
+    nginx.ingress.kubernetes.io/rewrite-target: /                    # Define o destino da reescrita de URL
+    nginx.ingress.kubernetes.io/weighted-services: '{"store-front": 80, "store-grpc": 20}'  # Balanceamento de carga 80/20
 spec:
   rules:
-  - host: "storefrontsdproject.com"  # O hostname que será acessado
+  - host: www.storefrontsdproject.com                                      # Domínio que será acessado
     http:
       paths:
-      - path: /
+      - path: /                                                          # Caminho raiz
         pathType: Prefix
         backend:
           service:
-            name: store-front
+            name: store-front                                            # Serviço que recebe 80% do tráfego
             port:
-              number: 80
-      - path: /
+              number: 80                                                 # Porta do serviço front-end
+      - path: /                                                          # Caminho raiz também
         pathType: Prefix
         backend:
           service:
-            name: store-grpc
+            name: store-grpc                                            # Serviço que recebe 20% do tráfego
             port:
-              number: 80
+              number: 80                                                 # Porta do serviço gRPC

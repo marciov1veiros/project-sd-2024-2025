@@ -503,10 +503,10 @@ metadata:
 spec:
   ports:
   - port: 80
-    protocol: TCP
     targetPort: 8080
   selector:
     app: store-front
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -572,9 +572,9 @@ spec:
   ports:
   - port: 80
     targetPort: 8080
-    protocol: TCP
   selector:
     app: store-grpc
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
