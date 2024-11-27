@@ -43,7 +43,8 @@ class OrderRequest(BaseModel):
 @app.post("/order-products")
 async def order_products(order: OrderRequest):
     #f"{os.getenv('GRPC_SERVER1_HOST', 'localhost')}:50051"
-    with grpc.insecure_channel("grpc-server1:50051") as channel:
+    #"grpc-server1:50051"
+    with grpc.insecure_channel(f"{os.getenv('GRPC_SERVER1_HOST', 'localhost')}:50051") as channel:
         stub = order_pb2_grpc.OrderServiceStub(channel)
 
         # Create a request (order)
@@ -65,7 +66,8 @@ async def order_products(order: OrderRequest):
 @app.get("/get-products")
 async def get_products():
     #f"{os.getenv('GRPC_SERVER2_HOST', 'localhost')}:50052"
-    with grpc.insecure_channel("grpc-server2:8088") as channel:
+    #"grpc-server2:8088"
+    with grpc.insecure_channel(f"{os.getenv('GRPC_SERVER2_HOST', 'localhost')}:50052") as channel:
         stub = order_pb2_grpc.ProductServiceStub(channel)
 
         # Create a request (order)
