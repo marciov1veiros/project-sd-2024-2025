@@ -1,18 +1,32 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
 metadata:
-  name: store-ingress
+  name: store-traffic-split
   namespace: storeapptest
-  annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
-  rules:
-  - http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: store-front
-            port:
-              number: 80
+  weighted:
+    services:
+    - name: store-front
+      weight: 80
+    - name: store-grpc
+      weight: 20
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: store-route
+  namespace: storeapptest
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: PathPrefix(`/`)
+    kind: Rule
+    services:
+    - name: store-front
+      port: 80
+      weight: 80
+    - name: store-grpc
+      port: 80
+      weight: 20
