@@ -1,18 +1,4 @@
 apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: store-traffic-split
-  namespace: storeapptest
-spec:
-  weighted:
-    services:
-    - name: store-front
-      weight: 80
-    - name: store-grpc
-      weight: 20
-
----
-apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: store-route
@@ -30,3 +16,9 @@ spec:
     - name: store-grpc
       port: 80
       weight: 20
+  - match: PathPrefix(`/get-products`)
+    kind: Rule
+    services:
+    - name: fastapi-app
+      port: 8000
+      weight: 100
