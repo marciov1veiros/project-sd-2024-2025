@@ -2,35 +2,28 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: store-ingress
-  namespace: default
+  namespace: storeapptest
   annotations:
-    nginx.ingress.kubernetes.io/load-balance: "ewma" # Balanceamento de carga
-    nginx.ingress.kubernetes.io/service-upstream: "true"
-    nginx.ingress.kubernetes.io/upstreams: |
-      {
-        "store-front": {
-          "weight": 80
-        },
-        "store-grpc": {
-          "weight": 20
-        }
-      }
+    traefik.ingress.kubernetes.io/router.entrypoints: web              # Define o ponto de entrada HTTP (porta 80)
+    traefik.ingress.kubernetes.io/router.priority: "10"                # Define a prioridade da rota
+    traefik.ingress.kubernetes.io/rewrite-target: /                    # Define o destino da reescrita de URL
+    traefik.ingress.kubernetes.io/weighted-services: '{"store-front": 80, "store-grpc": 20}'  # Balanceamento de carga 80/20
 spec:
   rules:
-  - host: storefrontsdproject.com
+  - host: storefrontsdproject.com                                      # Domínio que será acessado
     http:
       paths:
-      - path: /
+      - path: /                                                          # Caminho raiz
         pathType: Prefix
         backend:
           service:
-            name: store-front
+            name: store-front                                            # Serviço que recebe 80% do tráfego
             port:
-              number: 80
-      - path: /
+              number: 80                                                 # Porta do serviço front-end
+      - path: /                                                          # Caminho raiz também
         pathType: Prefix
         backend:
           service:
-            name: store-grpc
+            name: store-grpc                                            # Serviço que recebe 20% do tráfego
             port:
-              number: 80
+              number: 80                                                 # Porta do serviço gRPC
