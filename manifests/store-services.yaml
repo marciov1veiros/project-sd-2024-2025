@@ -17,7 +17,7 @@ metadata:
       }
 spec:
   rules:
-  - host: store-front-sd-project.com
+  - host: storefrontsdproject.com
     http:
       paths:
       - path: /
