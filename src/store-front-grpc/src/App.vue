@@ -35,11 +35,11 @@ export default {
   },
   methods: {
     getProducts() {
-      fetch('/products')
+      fetch('/get-products')
         .then(response => response.json())
         .then(products => {
           console.log('success getting proxy products')
-          this.products = products
+          this.products = products.products
         })
         .catch(error => {
           console.log(error)
@@ -92,15 +92,15 @@ export default {
         .then(response => {
           console.log(response)
           if (!response.ok) {
-            alert('Error occurred while submitting order! Now i know the code is changed and the kubernets change automatically :) Apresentação Sistemas Distribuidos!')
+            alert('Error occurred while submitting order! Now i know the code is changed and the kubernets change automatically :) Apresentação Sistemas Distribuidos!!!!')
           } else {
             this.cartItems = []
-            alert('Order submitted successfully! Now i know the code is changed and the kubernets change automatically :) Apresentação Sistemas Distribuidos!')
+            alert('Order submitted successfully! Now i know the code is changed and the kubernets change automatically :) Apresentação Sistemas Distribuidos!!!!')
           }
         })
         .catch(error => {
           console.log(error)
-          alert('Error occurred while submitting order! Now i know the code is changed and the kubernets change automatically :) Apresentação Sistemas Distribuidos!')
+          alert('Error occurred while submitting order! Now i know the code is changed and the kubernets change automatically :) Apresentação Sistemas Distribuidos!!!!')
         })
     }
   },
