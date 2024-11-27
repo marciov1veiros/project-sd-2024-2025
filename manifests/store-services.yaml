@@ -9,6 +9,7 @@ metadata:
     traefik.ingress.kubernetes.io/rewrite-target: /                    # Define o destino da reescrita de URL
     traefik.ingress.kubernetes.io/weighted-services: '{"store-front": 80, "store-grpc": 20}'  # Balanceamento de carga 80/20
 spec:
+  ingressClassName: traefik
   rules:
   - host: storefrontsdproject.com                                      # Domínio que será acessado
     http:
