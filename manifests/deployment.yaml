@@ -466,25 +466,25 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: store-front-grpc
+  name: store-grpc
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: store-front-grpc
+      app: store-grpc
   template:
     metadata:
       labels:
-        app: store-front-grpc
+        app: store-grpc
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
       containers:
-      - name: store-front-grpc
+      - name: store-grpc
         image: docker.io/grupo2sd2024/store-front-grpc:latest
         ports:
         - containerPort: 8080
-          name: store-front-grpc
+          name: store-grpc
         env: 
         - name: VUE_APP_ORDER_SERVICE_URL
           value: "http://order-service:3000/"
@@ -522,13 +522,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: store-front-grpc
+  name: store-grpc
 spec:
   ports:
   - port: 80
     targetPort: 8080
   selector:
-    app: store-front-grpc
+    app: store-grpc
   type: LoadBalancer
 ---
 apiVersion: apps/v1
