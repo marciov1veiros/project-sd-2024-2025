@@ -16,13 +16,6 @@ spec:
             name: store-front
             port:
               number: 80
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: store-grpc
-            port:
-              number: 80
 
 
 #apiVersion: traefik.containo.us/v1alpha1
