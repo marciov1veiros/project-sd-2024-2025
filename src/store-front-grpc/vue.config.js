@@ -27,8 +27,8 @@ module.exports = defineConfig({
         res.send({ status: 'ok', version: version})
       })
       
-      devServer.app.get('/get-products', (_, res) => {
-        fetch(`${PRODUCT_SERVICE_URL}get-products`)
+      devServer.app.get('/products', (_, res) => {
+        fetch(`${PRODUCT_SERVICE_URL}`)
           .then(response => response.json())
           .then(products => {
             res.send(products)

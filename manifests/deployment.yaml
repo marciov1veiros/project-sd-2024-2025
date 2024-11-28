@@ -533,7 +533,7 @@ spec:
         - name: VUE_APP_ORDER_SERVICE_URL
           value: "http://order-service:3000/"
         - name: VUE_APP_PRODUCT_SERVICE_URL
-          value: "http://fastapi-app:8000/"
+          value: "http://fastapi-app:8000/get-products"
         resources:
           requests:
             cpu: 1m

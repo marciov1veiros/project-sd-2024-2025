@@ -16,31 +16,6 @@ spec:
     - name: store-grpc
       port: 80
       weight: 20
-  # Roteia o tráfego para o store-front para a URL base e arquivos estáticos
-  - match: PathPrefix(`/js`) # Para arquivos estáticos JS
-    kind: Rule
-    services:
-      - name: store-grpc
-        port: 8080
-  
-  - match: PathPrefix(`/css`) # Para arquivos estáticos CSS
-    kind: Rule
-    services:
-      - name: store-grpc
-        port: 8080
-  
-  - match: PathPrefix(`/images`) # Para arquivos estáticos de imagem
-    kind: Rule
-    services:
-      - name: store-grpc
-        port: 8080
-
-  - match: PathPrefix(`/get-products`) # Para a API (fastapi-app)
-    kind: Rule
-    services:
-      - name: fastapi-app
-        port: 8000
-        weight: 100
   #- match: PathPrefix(`/get-products`)
   #  kind: Rule
   #  services:
