@@ -1,21 +1,48 @@
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: store-route
-  namespace: storeapptest
+  name: store-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/canary: "true"  # Marca o serviço canário
+    nginx.ingress.kubernetes.io/canary-weight: "20"  # 20% do tráfego vai para a versão canária
 spec:
-  entryPoints:
-    - web
-  routes:
-  - match: PathPrefix(`/`)
-    kind: Rule
-    services:
-    - name: store-grpc
-      port: 80
-      weight: 50
-    - name: store-front
-      port: 80
-      weight: 50
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: store-front
+            port:
+              number: 80
+      - path: /canary
+        pathType: Prefix
+        backend:
+          service:
+            name: store-grpc
+            port:
+              number: 80
+
+
+#apiVersion: traefik.containo.us/v1alpha1
+#kind: IngressRoute
+#metadata:
+#  name: store-route
+#  namespace: storeapptest
+#spec:
+#  entryPoints:
+#    - web
+#  routes:
+#  - match: PathPrefix(`/`)
+#    kind: Rule
+#    services:
+#    - name: store-grpc
+#      port: 80
+#      weight: 50
+#    - name: store-front
+#      port: 80
+#      weight: 50
   #- match: PathPrefix(`/get-products`)
   #  kind: Rule
   #  services:
