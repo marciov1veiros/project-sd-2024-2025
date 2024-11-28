@@ -4,7 +4,7 @@ metadata:
   name: store-ingress
   annotations:
     nginx.ingress.kubernetes.io/canary: "true"  # Marca o serviço canário
-    nginx.ingress.kubernetes.io/canary-weight: "20"  # 20% do tráfego vai para a versão canária
+    nginx.ingress.kubernetes.io/canary-weight: "5"  # 20% do tráfego vai para a versão canária
 spec:
   rules:
   - http:
@@ -14,6 +14,13 @@ spec:
         backend:
           service:
             name: store-front
+            port:
+              number: 80
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: store-grpc
             port:
               number: 80
 
