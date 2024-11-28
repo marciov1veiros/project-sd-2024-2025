@@ -521,6 +521,7 @@ spec:
     metadata:
       labels:
         app: store-grpc
+        version: canary  # Adicionei esta linha
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
