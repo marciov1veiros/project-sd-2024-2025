@@ -130,7 +130,7 @@ services:
       - backend_services
 
   store-front:
-    build: src/store-front
+    build: src/store-front-grpc
     container_name: 'store-front'
     restart: always
     ports:
