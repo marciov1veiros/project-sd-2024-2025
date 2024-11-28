@@ -69,7 +69,7 @@ async def order_products(order: OrderRequest):
 
 @app.get("/get-products")
 async def get_products():
-    grpc_server = "grpc-server2:8088"
+    grpc_server = f"{os.getenv('GRPC_SERVER2_HOST', 'localhost')}:8080"
     GRPC_CONNECTIONS.labels(server=grpc_server).inc()  # Increment active connections
     start_time = time.time()
 
