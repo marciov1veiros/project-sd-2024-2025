@@ -16,9 +16,9 @@ spec:
     - name: store-grpc
       port: 80
       weight: 20
-  - match: PathPrefix(`/get-products`)
-    kind: Rule
-    services:
-    - name: fastapi-app
-      port: 8000
-      weight: 100
+  #- match: PathPrefix(`/get-products`)
+  #  kind: Rule
+  #  services:
+  #  - name: fastapi-app
+  #    port: 8000
+  #    weight: 100
