@@ -92,15 +92,15 @@ export default {
         .then(response => {
           console.log(response)
           if (!response.ok) {
-            alert('Error occurred while submitting order! Now i know the code is changed and the kubernets change automatically :) Apresentação Sistemas Distribuidos!!!!')
+            alert('Error occurred while submitting order! Now i know the code is changed and the kubernets change automatically :) GRPC SERVER!')
           } else {
             this.cartItems = []
-            alert('Order submitted successfully! Now i know the code is changed and the kubernets change automatically :) Apresentação Sistemas Distribuidos!!!!')
+            alert('Order submitted successfully! Now i know the code is changed and the kubernets change automatically :) GRPC SERVER!')
           }
         })
         .catch(error => {
           console.log(error)
-          alert('Error occurred while submitting order! Now i know the code is changed and the kubernets change automatically :) Apresentação Sistemas Distribuidos!!!!')
+          alert('Error occurred while submitting order! Now i know the code is changed and the kubernets change automatically :) GRPC SERVER!')
         })
     }
   },
