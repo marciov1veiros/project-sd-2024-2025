@@ -69,7 +69,7 @@ async def order_products(order: OrderRequest):
 
 @app.get("/get-products")
 async def get_products():
-    grpc_server = f"{os.getenv('GRPC_SERVER2_HOST', 'localhost')}:8080"
+    grpc_server = "grpc-server2:8088"
     GRPC_CONNECTIONS.labels(server=grpc_server).inc()  # Increment active connections
     start_time = time.time()
 
@@ -102,7 +102,7 @@ async def get_products():
                 } for product in response.products
             ]
 
-            return {"products": products}
+            return products
     except grpc.RpcError as e:
         # Update metrics for gRPC failure
         duration = time.time() - start_time
