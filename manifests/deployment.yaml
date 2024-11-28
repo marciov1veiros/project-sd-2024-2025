@@ -516,12 +516,10 @@ spec:
   selector:
     matchLabels:
       app: store-grpc
-      version: canary
   template:
     metadata:
       labels:
         app: store-grpc
-        version: canary  # Adicionei esta linha
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
@@ -575,7 +573,6 @@ spec:
     targetPort: 8080
   selector:
     app: store-grpc
-    version: canary
 ---
 apiVersion: apps/v1
 kind: Deployment
