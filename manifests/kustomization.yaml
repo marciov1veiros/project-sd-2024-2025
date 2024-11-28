@@ -5,6 +5,7 @@ metadata:
   name: storeapptest
 resources:
   - deployment.yaml  
+  - store-services.yaml
 
 
 namespace: storeapptest

@@ -1,0 +1,24 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: store-route
+  namespace: storeapptest
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: PathPrefix(`/`)
+    kind: Rule
+    services:
+    - name: store-grpc
+      port: 80
+      weight: 20
+    - name: store-front
+      port: 80
+      weight: 80
+  #- match: PathPrefix(`/get-products`)
+  #  kind: Rule
+  #  services:
+  #  - name: fastapi-app
+  #    port: 8000
+  #    weight: 100

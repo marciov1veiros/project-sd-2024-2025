@@ -95,8 +95,42 @@ services:
       - AI_SERVICE_URL=http://ai-service:5001/
     networks:
       - backend_services
+
+  fastapi-app:
+    image: fastapi-app
+    container_name: 'fastapi-app'
+    build:
+      context: src/fastapi-app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - grpc-server1
+      - grpc-server2
+    networks:
+      - backend_services
+
+  grpc-server1:
+    image: grpc-server1
+    container_name: 'grpc-server1'
+    build:
+      context: src/grpc-server1
+    ports:
+      - "50051:50051"
+    networks:
+      - backend_services
+
+  grpc-server2:
+    image: grpc-server2
+    container_name: 'grpc-server2'
+    build:
+      context: src/product-service-1
+    ports:
+      - "8088:8088"
+    networks:
+      - backend_services
+
   store-front:
-    build: src/store-front
+    build: src/store-front-grpc
     container_name: 'store-front'
     restart: always
     ports:
@@ -107,13 +141,14 @@ services:
       timeout: 10s
       retries: 5
     environment:
-      - VUE_APP_PRODUCT_SERVICE_URL=http://product-service:3002/
+      - VUE_APP_PRODUCT_SERVICE_URL=http://fastapi-app:8000/
       - VUE_APP_ORDER_SERVICE_URL=http://order-service:3000/
     networks:
       - backend_services
     depends_on:
-      - product-service
+      - fastapi-app
       - order-service
+
   store-admin:
     build: src/store-admin
     container_name: 'store-admin'

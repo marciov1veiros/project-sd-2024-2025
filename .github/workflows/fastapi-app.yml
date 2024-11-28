@@ -1,11 +1,11 @@
-name: Virtual-Customer-Upload
+name: Fastapi-App-Upload
 
 on:
   push:
     branches:
-      - dev # Branch que será monitorada
+      - dev-2  # Branch que será monitorada
     paths:
-      - 'src/virtual-customer/**'
+      - 'src/fastapi-app/**'
 
 jobs:
   build:
@@ -35,11 +35,11 @@ jobs:
     # Passo 5: Build e tag da imagem Docker
     - name: Build the Docker image
       run: |
-        docker build -f ./src/virtual-customer/Dockerfile -t grupo2sd2024/virtual-customer:latest ./src/virtual-customer
-        docker tag grupo2sd2024/virtual-customer:latest grupo2sd2024/virtual-customer:${{ env.IMAGE_VERSION }}
-    
+        docker build -f ./src/fastapi-app/Dockerfile -t grupo2sd2024/fastapi-app:latest ./src/fastapi-app
+        docker tag grupo2sd2024/fastapi-app:latest grupo2sd2024/fastapi-app:${{ env.IMAGE_VERSION }}
+
     # Passo 6: Push da imagem Docker para o Docker Hub
     - name: Push the Docker image
       run: |
-        docker push grupo2sd2024/virtual-customer:latest
-        docker push grupo2sd2024/virtual-customer:${{ env.IMAGE_VERSION }}
+        docker push grupo2sd2024/fastapi-app:latest
+        docker push grupo2sd2024/fastapi-app:${{ env.IMAGE_VERSION }}
