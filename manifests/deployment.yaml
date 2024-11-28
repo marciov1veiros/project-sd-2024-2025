@@ -516,6 +516,7 @@ spec:
   selector:
     matchLabels:
       app: store-grpc
+      version: canary
   template:
     metadata:
       labels:
@@ -573,6 +574,7 @@ spec:
     targetPort: 8080
   selector:
     app: store-grpc
+    version: canary
 ---
 apiVersion: apps/v1
 kind: Deployment

@@ -16,7 +16,7 @@ spec:
             name: store-front
             port:
               number: 80
-      - path: /canary
+      - path: /
         pathType: Prefix
         backend:
           service:
