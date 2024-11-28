@@ -13,9 +13,15 @@ spec:
     - name: store-grpc
       port: 80
       weight: 20
+      sticky:
+        cookie:
+          name: store-grpc-cookie
     - name: store-front
       port: 80
       weight: 80
+      sticky:
+        cookie:
+          name: store-front-cookie
   #- match: PathPrefix(`/get-products`)
   #  kind: Rule
   #  services:
