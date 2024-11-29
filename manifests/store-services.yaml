@@ -7,37 +7,34 @@ spec:
   entryPoints:
     - web
   routes:
-  - match: HeadersRegexp(`Cookie`, `store-session=front`)
-    kind: Rule
-    priority: 10
-    services:
-    - name: store-front-service
-      port: 80
-  - match: HeadersRegexp(`Cookie`, `store-session=grpc`)
-    kind: Rule
-    priority: 10
-    services:
-    - name: store-grpc-service
-      port: 80
-  # Rota genérica para balanceamento com ambos os serviços
-  - match: PathPrefix(`/`)
-    kind: Rule
-    priority: 5
-    services:
-    # Aplicando pesos para balanceamento
-    - name: store-front-service
-      port: 80
-      weight: 50
-    - name: store-grpc-service
-      port: 80
-      weight: 50
-    middlewares:
-    # Aplicando middlewares específicos por serviço
-    - name: set-cookie-front
-      # Middleware para store-front-service
-      selector:
-        match: "store-front-service"
-    - name: set-cookie-grpc
-      # Middleware para store-grpc-service
-      selector:
-        match: "store-grpc-service"
+    # Rota para store-front-service com cookie 'store-session=front'
+    - match: HeadersRegexp(`Cookie`, `store-session=front`)
+      kind: Rule
+      priority: 10
+      services:
+        - name: store-front-service
+          port: 80
+    # Rota para store-grpc-service com cookie 'store-session=grpc'
+    - match: HeadersRegexp(`Cookie`, `store-session=grpc`)
+      kind: Rule
+      priority: 10
+      services:
+        - name: store-grpc-service
+          port: 80
+
+    # Rota genérica para balanceamento de carga com ambos os serviços
+    - match: PathPrefix(`/`)
+      kind: Rule
+      priority: 5
+      services:
+        # Balanceamento de carga com pesos
+        - name: store-front-service
+          port: 80
+          weight: 50
+        - name: store-grpc-service
+          port: 80
+          weight: 50
+      middlewares:
+        # Aplicando middleware para set-cookie específico para cada serviço
+        - name: set-cookie-front  # Middleware para o store-front-service
+        - name: set-cookie-grpc   # Middleware para o store-grpc-service
