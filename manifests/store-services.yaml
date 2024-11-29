@@ -19,19 +19,25 @@ spec:
     services:
     - name: store-grpc-service
       port: 80
-  - match: PathPrefix(`/`)  # Pode ajustar o match se necessário
+  # Rota genérica para balanceamento com ambos os serviços
+  - match: PathPrefix(`/`)
     kind: Rule
-    middlewares:
-    - name: set-cookie-front
+    priority: 5
     services:
+    # Aplicando pesos para balanceamento
     - name: store-front-service
       port: 80
       weight: 50
-  - match: PathPrefix(`/`)  # Mesmo aqui, ajuste se precisar
-    kind: Rule
-    middlewares:
-    - name: set-cookie-grpc
-    services:
     - name: store-grpc-service
       port: 80
       weight: 50
+    middlewares:
+    # Aplicando middlewares específicos por serviço
+    - name: set-cookie-front
+      # Middleware para store-front-service
+      selector:
+        match: "store-front-service"
+    - name: set-cookie-grpc
+      # Middleware para store-grpc-service
+      selector:
+        match: "store-grpc-service"
