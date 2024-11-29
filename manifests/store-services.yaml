@@ -1,24 +1,33 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: store-route
+  name: combined-route
   namespace: storeapptest
 spec:
   entryPoints:
     - web
   routes:
-  - match: PathPrefix(`/`)
+  - match: HeadersRegexp(`Cookie`, `store-session=front`)
     kind: Rule
+    priority: 10
+    services:
+    - name: store-front-service
+      port: 80
+  - match: HeadersRegexp(`Cookie`, `store-session=grpc`)
+    kind: Rule
+    priority: 10
     services:
     - name: store-grpc-service
       port: 80
-      weight: 80
+  - match: PathPrefix(`/`)
+    kind: Rule
+    priority: 1
+    middlewares:
+    - name: set-cookie-front
+    services:
     - name: store-front-service
       port: 80
-      weight: 20
-  #- match: PathPrefix(`/get-products`)
-  #  kind: Rule
-  #  services:
-  #  - name: fastapi-app
-  #    port: 8000
-  #    weight: 100
+      weight: 50
+    - name: store-grpc-service
+      port: 80
+      weight: 50
