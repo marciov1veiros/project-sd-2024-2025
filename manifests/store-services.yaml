@@ -16,9 +16,5 @@ spec:
     - name: store-front
       port: 80
       weight: 80
-  #- match: PathPrefix(`/get-products`)
-  #  kind: Rule
-  #  services:
-  #  - name: fastapi-app
-  #    port: 8000
-  #    weight: 100
+  middlewares:
+  - name: no-cache-headers
