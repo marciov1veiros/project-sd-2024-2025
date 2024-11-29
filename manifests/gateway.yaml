@@ -1,14 +1,14 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: store-gateway
+  name: store-services-gateway
 spec:
   selector:
-    istio: ingressgateway  # Usa o ingress gateway padrão do Istio
+    istio: ingressgateway
   servers:
     - port:
         number: 80
         name: http
         protocol: HTTP
       hosts:
-        - "0.0.0.0"  # Aceita tráfego de qualquer IP
+        - "*"

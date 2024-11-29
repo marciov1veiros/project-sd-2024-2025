@@ -1,19 +1,9 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: store-front-destination
+  name: store-services-destinationrule
 spec:
   host: store-front-service
-  trafficPolicy:
-    loadBalancer:
-      simple: ROUND_ROBIN
----
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-  name: store-grpc-destination
-spec:
-  host: store-grpc-service
   trafficPolicy:
     loadBalancer:
       simple: ROUND_ROBIN
