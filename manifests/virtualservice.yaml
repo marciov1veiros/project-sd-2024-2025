@@ -4,8 +4,7 @@ metadata:
   name: store-services-virtualservice
 spec:
   hosts:
-    - store-front-service
-    - store-grpc-service
+    - "*"
   http:
     - route:
       - destination:
