@@ -31,14 +31,10 @@ spec:
         - name: store-front-service
           port: 80
           weight: 50
+          middlewares:
+            - name: set-cookie-front
         - name: store-grpc-service
           port: 80
           weight: 50
-      middlewares:
-        # Aplicando middleware para cada serviço, com base no cookie de sessão
-        - name: set-cookie-front  # Middleware para o store-front-service
-          selector:
-            match: "store-front-service"  # Aplica esse middleware apenas para este serviço
-        - name: set-cookie-grpc   # Middleware para o store-grpc-service
-          selector:
-            match: "store-grpc-service"  # Aplica esse middleware apenas para este serviço
+          middlewares:
+            - name: set-cookie-grpc
