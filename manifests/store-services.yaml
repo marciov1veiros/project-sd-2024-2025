@@ -10,11 +10,15 @@ spec:
   - match: PathPrefix(`/`)
     kind: Rule
     services:
-    - name: store-grpc-service
+    - name: store-grpc
       port: 80
       weight: 50
-    - name: store-front-service
+    - name: store-front
       port: 80
       weight: 50
-    middlewares:
-      - name: sticky-cookie    # Referência ao Middleware criado
+  #- match: PathPrefix(`/get-products`)
+  #  kind: Rule
+  #  services:
+  #  - name: fastapi-app
+  #    port: 8000
+  #    weight: 100
