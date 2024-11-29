@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - web
   routes:
-  - match: PathPrefix(`/store-front/`)
+  - match: PathPrefix(`/store-front`)
     kind: Rule
     services:
     - name: store-grpc
