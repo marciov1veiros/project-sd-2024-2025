@@ -7,12 +7,12 @@ spec:
   entryPoints:
     - web
   routes:
-  - match: PathPrefix(`/store-front`)
+  - match: PathPrefix(`/`)
     kind: Rule
     services:
     - name: store-grpc
       port: 80
-      weight: 20
+      weight: 100
     - name: store-front
       port: 80
-      weight: 80
+      weight: 0
