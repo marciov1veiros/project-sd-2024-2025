@@ -6,6 +6,6 @@ kustomize:
   - docker.io/grupo2sd2024/makeline-service:latest
   - docker.io/grupo2sd2024/store-admin:latest
   - docker.io/grupo2sd2024/virtual-worker:latest
-  - docker.io/grupo2sd2024/store-front-grpc:16d373a02a07dc871ae5bdaec7832ef9f42c490e
+  - docker.io/grupo2sd2024/store-front-grpc:6f8c312f567157f0385e625be89267c0bd75322a
   - docker.io/sdgrupo01/product-service-grpc:latest
   - docker.io/grupo2sd2024/fastapi-app:latest
