@@ -9,4 +9,4 @@ resources:
   - middleware.yaml
 
 
-namespace: storeapptest
+namespace: storeapp
