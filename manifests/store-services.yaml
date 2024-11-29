@@ -12,10 +12,10 @@ spec:
     services:
     - name: store-grpc-service
       port: 80
-      weight: 20
+      weight: 80
     - name: store-front-service
       port: 80
-      weight: 80
+      weight: 20
   #- match: PathPrefix(`/get-products`)
   #  kind: Rule
   #  services:
