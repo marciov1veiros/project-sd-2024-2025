@@ -6,7 +6,7 @@ metadata:
 spec:
   headers:
     customResponseHeaders:
-      Set-Cookie: "store-session=front; Max-Age=300; Path=/; HttpOnly"
+      Set-Cookie: "store-session=front; Max-Age=10; Path=/; HttpOnly"
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
@@ -16,4 +16,4 @@ metadata:
 spec:
   headers:
     customResponseHeaders:
-      Set-Cookie: "store-session=grpc; Max-Age=300; Path=/; HttpOnly"
+      Set-Cookie: "store-session=grpc; Max-Age=10; Path=/; HttpOnly"
