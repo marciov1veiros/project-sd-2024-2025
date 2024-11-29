@@ -5,8 +5,9 @@ metadata:
   name: storeapptest
 resources:
   - deployment.yaml  
-  - store-services.yaml
-  - middleware.yaml
+  - gateway.yaml
+  - destinationrule.yaml
+  - virtualservice.yaml
 
 
 namespace: storeapptest

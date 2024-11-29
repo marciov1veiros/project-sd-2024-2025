@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: store-virtualservice
+spec:
+  hosts:
+    - "0.0.0.0"  # Aplica a todos os IPs (pode ser ajustado se precisar especificar um IP)
+  http:
+    - route:
+        - destination:
+            host: store-front-service
+            weight: 80
+        - destination:
+            host: store-grpc-service
+            weight: 20
