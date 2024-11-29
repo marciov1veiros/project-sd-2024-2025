@@ -19,15 +19,19 @@ spec:
     services:
     - name: store-grpc-service
       port: 80
-  - match: PathPrefix(`/`)
+  - match: PathPrefix(`/`)  # Pode ajustar o match se necessário
     kind: Rule
-    priority: 1
     middlewares:
     - name: set-cookie-front
     services:
     - name: store-front-service
       port: 80
       weight: 50
+  - match: PathPrefix(`/`)  # Mesmo aqui, ajuste se precisar
+    kind: Rule
+    middlewares:
+    - name: set-cookie-grpc
+    services:
     - name: store-grpc-service
       port: 80
       weight: 50
