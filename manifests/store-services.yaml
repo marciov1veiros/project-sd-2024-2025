@@ -16,5 +16,3 @@ spec:
     - name: store-front
       port: 80
       weight: 80
-  middlewares:
-  - name: no-cache-headers
