@@ -3,45 +3,23 @@ kind: IngressRoute
 metadata:
   name: combined-route
   namespace: storeapptest
+  annotations:
+    # Habilitando sticky session com o cookie store-session
+    traefik.ingress.kubernetes.io/affinity: "cookie"
+    traefik.ingress.kubernetes.io/session-cookie-name: "store-session"
+    traefik.ingress.kubernetes.io/session-cookie-http-only: "true"
 spec:
   entryPoints:
     - web
   routes:
-    # Rota para o store-front-service com o cookie 'store-session=front'
-    - match: HeadersRegexp(`Cookie`, `store-session=front`)
-      kind: Rule
-      priority: 10
-      services:
-        - name: store-front-service
-          port: 80
-
-    # Rota para o store-grpc-service com o cookie 'store-session=grpc'
-    - match: HeadersRegexp(`Cookie`, `store-session=grpc`)
-      kind: Rule
-      priority: 10
-      services:
-        - name: store-grpc-service
-          port: 80
-
-    # Rota genérica para balanceamento de carga com ambos os serviços
     - match: PathPrefix(`/`)  # Esse match cobre qualquer requisição para /
       kind: Rule
-      priority: 5
+      priority: 10
       services:
         # Balanceamento de carga entre os dois serviços com pesos
         - name: store-front-service
           port: 80
           weight: 50
-      middlewares:
-        - name: set-cookie-front
-
-    # Rota para o store-grpc-service com o middleware correto para setar o cookie 'store-session=grpc'
-    - match: PathPrefix(`/`)  # Garantir que o match é específico para esse serviço
-      kind: Rule
-      priority: 5
-      services:
         - name: store-grpc-service
           port: 80
           weight: 50
-      middlewares:
-        - name: set-cookie-grpc
