@@ -16,10 +16,5 @@ spec:
     - name: store-front-service
       port: 80
       weight: 50
-      sticky:
-        cookie:
-          name: "SESSIONID"      # Nome do cookie
-          secure: true            # Opcional, se estiver usando HTTPS
-          httpOnly: true          # Impede acesso ao cookie por JavaScript
-          sameSite: "Lax"         # Política de SameSite (Lax, Strict, None)
-          expires: "10s"          # Expiração do cookie após 10 segundos
+    middlewares:
+      - name: sticky-cookie    # Referência ao Middleware criado

@@ -1,0 +1,12 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: sticky-cookie
+  namespace: storeapptest
+spec:
+  cookie:
+    name: "SESSIONID"         # Nome do cookie
+    secure: true               # Se usar HTTPS
+    httpOnly: true             # Impede acesso ao cookie por JavaScript
+    sameSite: "Lax"            # Política de SameSite (Lax, Strict, None)
+    expires: "10s"             # Expiração do cookie após 10 segundos
