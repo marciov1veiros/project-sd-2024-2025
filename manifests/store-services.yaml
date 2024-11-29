@@ -2,7 +2,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: combined-route
-  namespace: storeapptest
+  namespace: default
   annotations:
     # Habilitando sticky session com o cookie store-session
     traefik.ingress.kubernetes.io/affinity: "cookie"
