@@ -4,7 +4,7 @@ metadata:
   name: combined-route
   namespace: default
   annotations:
-    # Habilitando sticky session com o cookie store-session
+    # Habilitando sticky session com o cookie store-sessions
     traefik.ingress.kubernetes.io/affinity: "cookie"
     traefik.ingress.kubernetes.io/session-cookie-name: "store-session"
     traefik.ingress.kubernetes.io/session-cookie-http-only: "true"
