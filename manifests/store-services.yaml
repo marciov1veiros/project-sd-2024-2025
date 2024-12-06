@@ -19,7 +19,7 @@ spec:
         # Balanceamento de carga entre os dois serviços com pesos
         - name: store-front-service
           port: 80
-          weight: 50
+          weight: 0
         - name: store-grpc-service
           port: 80
-          weight: 50
+          weight: 100
