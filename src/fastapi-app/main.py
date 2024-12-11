@@ -76,6 +76,7 @@ async def get_products():
     #grpc.insecure_channel("grpc-server2:8080")
     #grpc.insecure_channel(f"{os.getenv('GRPC_SERVER2_HOST', 'localhost')}:8080")
     try:
+        print("Um pedido grpc foi iniciado!")
         with grpc.insecure_channel(grpc_server) as channel:
             stub = order_pb2_grpc.ProductServiceStub(channel)
             grpc_method = "GetProducts"
@@ -101,10 +102,11 @@ async def get_products():
                     "image": product.image
                 } for product in response.products
             ]
-
+            print("O Pedido grpc foi um sucesso!")
             return products
     except grpc.RpcError as e:
         # Update metrics for gRPC failure
+        print("Ocorreu um erro com o pedido grpc, o erro foi o seguinte:\n" + e)
         duration = time.time() - start_time
         GRPC_REQUEST_COUNT.labels(method=grpc_method, status="failure").inc()
         GRPC_REQUEST_LATENCY.labels(method=grpc_method, status="failure").observe(duration)
