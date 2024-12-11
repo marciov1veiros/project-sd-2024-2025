@@ -88,7 +88,7 @@ async def get_products():
             print("O Pedido grpc foi um sucesso!")
             return products
     except grpc.RpcError as e:
-        print("Ocorreu um erro com o pedido grpc, o erro foi o seguinte:\n" + e)
+        print(f"Ocorreu um erro com o pedido grpc, o erro foi o seguinte:\n{e}")
         duration = time.time() - start_time
         GRPC_REQUEST_COUNT.labels(method=grpc_method, status="failure").inc()
         GRPC_REQUEST_LATENCY.labels(method=grpc_method, status="failure").observe(duration)
