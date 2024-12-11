@@ -46,20 +46,14 @@ class OrderRequest(BaseModel):
 
 @app.post("/order-products")
 async def order_products(order: OrderRequest):
-    #grpc.insecure_channel("grpc-server1:50051")
-    #grpc.insecure_channel(f"{os.getenv('GRPC_SERVER1_HOST', 'localhost')}:50051")
     with grpc.insecure_channel(f"{os.getenv('GRPC_SERVER1_HOST', 'localhost')}:50051") as channel:
         stub = order_pb2_grpc.OrderServiceStub(channel)
-
-        # Create a request (order)
         order = order_pb2.OrderMessage(
             customer_id=order.customer_id,
             items=[
                 order_pb2.OrderItem(product_id=item.product_id, quantity=item.quantity, price=item.price) for item in order.items
             ]
         )
-
-        # Call the method to Submit order
         response = stub.SubmitOrder(order)
 
         return {
@@ -70,29 +64,18 @@ async def order_products(order: OrderRequest):
 @app.get("/get-products")
 async def get_products():
     grpc_server = f"{os.getenv('GRPC_SERVER2_HOST', 'localhost')}:8080"
-    GRPC_CONNECTIONS.labels(server=grpc_server).inc()  # Increment active connections
+    GRPC_CONNECTIONS.labels(server=grpc_server).inc()
     start_time = time.time()
-
-    #grpc.insecure_channel("grpc-server2:8080")
-    #grpc.insecure_channel(f"{os.getenv('GRPC_SERVER2_HOST', 'localhost')}:8080")
     try:
         print("Um pedido grpc foi iniciado!")
         with grpc.insecure_channel(grpc_server) as channel:
             stub = order_pb2_grpc.ProductServiceStub(channel)
             grpc_method = "GetProducts"
-
-            # Create a request (order)
             request = order_pb2.Empty()
-
-            # Call the method to Submit order
             response = stub.GetProducts(request)
-
-            # Update gRPC metrics
             duration = time.time() - start_time
             GRPC_REQUEST_COUNT.labels(method=grpc_method, status="success").inc()
             GRPC_REQUEST_LATENCY.labels(method=grpc_method, status="success").observe(duration)
-
-            # Serialize the response
             products = [
                 {
                     "id": product.id,
@@ -105,14 +88,13 @@ async def get_products():
             print("O Pedido grpc foi um sucesso!")
             return products
     except grpc.RpcError as e:
-        # Update metrics for gRPC failure
         print("Ocorreu um erro com o pedido grpc, o erro foi o seguinte:\n" + e)
         duration = time.time() - start_time
         GRPC_REQUEST_COUNT.labels(method=grpc_method, status="failure").inc()
         GRPC_REQUEST_LATENCY.labels(method=grpc_method, status="failure").observe(duration)
         raise HTTPException(status_code=500, detail="Failed to fetch products")
     finally:
-        GRPC_CONNECTIONS.labels(server=grpc_server).dec()  # Decrement active connections
+        GRPC_CONNECTIONS.labels(server=grpc_server).dec()
     
 @app.middleware("http")
 async def monitor_requests(request: Request, call_next):
