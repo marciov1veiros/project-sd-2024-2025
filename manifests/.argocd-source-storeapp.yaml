@@ -8,4 +8,4 @@ kustomize:
   - docker.io/grupo2sd2024/virtual-worker:latest
   - docker.io/grupo2sd2024/fastapi-app:58e37f1525cbdd6301b16a36c97659a7870ecb76
   - docker.io/grupo2sd2024/store-front-grpc:0f03395740c10e0894c4bea8480bd3ee60e76766
-  - docker.io/sdgrupo01/product-service-grpc:31b7ad9
+  - docker.io/sdgrupo01/product-service-grpc:6dee132
