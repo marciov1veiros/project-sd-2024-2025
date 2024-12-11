@@ -366,8 +366,18 @@ spec:
         ports:
         - containerPort: 8080
         env: 
-        - name: AI_SERVICE_URL
-          value: "http://ai-service:5001/"
+        - name: JDBC_URL
+          value: "jdbc:mysql://sistemasdistribuidos-peter-04b9.l.aivencloud.com:28708/defaultdb"
+        - name: JDBC_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-secret-user
+              key: JDBC_USER
+        - name: JDBC_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret-password
+              key: JDBC_PASSWORD
         resources:
           requests:
             cpu: 500m
