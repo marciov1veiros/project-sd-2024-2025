@@ -1,0 +1,11 @@
+kustomize:
+  images:
+  - docker.io/grupo2sd2024/product-service:latest
+  - docker.io/grupo2sd2024/store-front:ab0b75290066734c4da1a90bd70310e3311966f3
+  - docker.io/grupo2sd2024/order-service:latest
+  - docker.io/grupo2sd2024/makeline-service:latest
+  - docker.io/grupo2sd2024/store-admin:latest
+  - docker.io/grupo2sd2024/virtual-worker:latest
+  - docker.io/grupo2sd2024/store-front-grpc:5d59bc0c6b301664e39f52bd0ee90264e86abce0
+  - docker.io/sdgrupo01/product-service-grpc:latest
+  - docker.io/grupo2sd2024/fastapi-app:latest

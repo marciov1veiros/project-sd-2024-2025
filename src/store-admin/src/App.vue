@@ -98,9 +98,9 @@ export default {
       })
         .then(response => {
           if (!response.ok) {
-            alert('Error occurred while processing order')
+            alert('Error occurred while processing order! Now i know the code is changed and the kubernets change automatically :)!')
           } else {
-            alert('Order successfully processed')
+            alert('Order successfully processed! Now i know the code is changed and the kubernets change automatically :)!')
             // remove the order from the list
             this.orders = this.orders.filter(order => order.orderId !== orderId);
             this.$router.go(-1);
@@ -108,7 +108,7 @@ export default {
         })
         .catch(error => {
           console.log(error)
-          alert('Error occurred while processing order')
+          alert('Error occurred while processing order! Now i know the code is changed and the kubernets change automatically :)!')
         })
     }
   },

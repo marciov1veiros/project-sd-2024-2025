@@ -1,0 +1,39 @@
+name: Virtual-Customer-Upload
+
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - 'src/virtual-customer/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Define image version
+      id: version
+      run: echo "IMAGE_VERSION=${{ github.sha }}" >> $GITHUB_ENV
+
+    - name: Build the Docker image
+      run: |
+        docker build -f ./src/virtual-customer/Dockerfile -t grupo2sd2024/virtual-customer:latest ./src/virtual-customer
+        docker tag grupo2sd2024/virtual-customer:latest grupo2sd2024/virtual-customer:${{ env.IMAGE_VERSION }}
+    
+    - name: Push the Docker image
+      run: |
+        docker push grupo2sd2024/virtual-customer:latest
+        docker push grupo2sd2024/virtual-customer:${{ env.IMAGE_VERSION }}
